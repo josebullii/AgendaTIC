@@ -28,10 +28,18 @@ SubProceso inicializarVectores(vNombres, vNumeros, tam)
 	
 FinSubProceso
 
-Funcion letrax <- buscarhueco()
+Funcion pos <- buscarhueco(vNombres, tam)
+	Definir i, pos Como Entero;
 	
-	Definir letrax Como Caracter;
-	letrax = "";
+	Para i = 0 Hasta tam - 1 Con Paso 1 Hacer 
+		
+		Si vNombres[i] == "x" Entonces
+			pos = i;
+			i = tam;
+		FinSi
+		
+	FinPara
+	
 	
 FinFuncion
 
@@ -47,7 +55,7 @@ Algoritmo AgendaTIC
 	Escribir opc;
 	
 	inicializarVectores(vNombres, vNumeros, tam);
-	x = buscarhueco();
+	pos = buscarhueco();
 	
 	Mientras opc <> 5 Hacer
 		
