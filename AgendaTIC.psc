@@ -94,23 +94,61 @@ Subproceso verTodos (vNombres, vNumeros, tam)
 	
 FinSubProceso
 
+Funcion posBorra <- borrarContacto (vNombres, vNumeros, tam)
+	Definir i, posBorra Como Entero;
+	Definir nombre Como Caracter;
+	posBorra = -1;
+	
+	Escribir "Dime un nombre";
+	Leer nombre;
+	
+	nombre = Minusculas(nombre);
+	
+	Para i = 0 hasta tam -1 Con Paso 1 Hacer
+		Si (Minusculas(vNombres[i]) == nombre) o (vNumeros[i] == nombre) Entonces
+			vNombres[i] = "";
+			vNumeros[i] = "";
+			posBorra = i;
+			i = tam;
+			Escribir "El contacto " nombre " ha sido eliminado";
+		FinSi
+	FinPara
+	
+FinFuncion
 
-
-
+Funcion posEdit <- editarContacto (vNombres, vNumeros, tam)
+	Definir i, pos Como Entero;
+	Definir nombre, nuevonombre, nuevonumero Como Caracter;
+	pos = -1;
+	
+	Escribir "Dime un nombre o un telefono";
+	Leer nombre;
+	
+	nombre = Minusculas(nombre);
+	
+	Para i = 0 hasta tam -1 Con Paso 1 Hacer
+		Si (Minusculas(vNombres[i]) == nombre) o (vNumeros[i] == nombre) Entonces
+			Escribir "Escribe el nuevo nombre del contacto";
+			Leer nuevonombre;
+			Escribir "Escribe el nuevo número del contacto";
+			Leer nuevonumero;
+			vNombres[i] = nuevonombre;
+			vNumeros[i] = nuevonumero;
+			Escribir nombre " ha cambiado a " vNombres[i] " / " vNumeros[i];
+		FinSi
+	FinPara
+FinFuncion
 
 Algoritmo AgendaTIC
 	
-	Definir opc, tam,pos como Entero;
+	Definir opc, tam, pos, posBorra, posEdit como Entero;
 	Definir vNombres, vNumeros, x Como Caracter;
 	tam = 10;
 	opc = pintaMenu();
 	Dimension vNombres[tam];
 	Dimension vNumeros[tam];
 	
-	Escribir opc;
-	
 	inicializarVectores(vNombres, vNumeros, tam);
-	
 	
 	Mientras opc <> 6 Hacer
 		
@@ -118,9 +156,9 @@ Algoritmo AgendaTIC
 			1: 
 				añadirContacto(vNombres, vNumeros, tam);
 			2: 
-				Escribir "OPCIÓN 2";
+				posBorra <- borrarContacto(vNombres, vNumeros, tam);
 			3: 
-				Escribir "OPCIÓN 3";
+				posEdit <- editarContacto (vNombres, vNumeros, tam);
 			4:
 				pos = buscarContacto(vNombres, vNumeros, tam);
 				Si pos == -1 Entonces
